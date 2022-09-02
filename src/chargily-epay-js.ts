@@ -1,10 +1,8 @@
-import { EPAY_CHARGILY_URL, Invoice } from "./configuration";
-import { IInvoice } from "./IInvoice";
+import { EPAY_CHARGILY_URL, Invoice, Mode } from "./configuration";
+import { IInvoice, ICheckoutURL } from "./IInvoice";
 import axios from "axios"
 
-export interface ICheckoutUrl {
-         checkout_url : string
-     }
+export { Invoice, Mode };
 
 export const createPayment = async (invoice: Invoice) => {
 const inv : IInvoice = {
@@ -19,7 +17,7 @@ const inv : IInvoice = {
 
 try {
     let res : any
-    const {data} = await  axios.post<ICheckoutUrl>(
+    const {data} = await  axios.post<ICheckoutURL>(
         EPAY_CHARGILY_URL,
         inv,
         {

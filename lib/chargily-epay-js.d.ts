@@ -1,5 +1,4 @@
-import { Invoice } from "./configuration";
-export interface ICheckoutUrl {
-    checkout_url: string;
-}
-export declare const createPayment: (invoice: Invoice) => Promise<string | ICheckoutUrl>;
+import { Invoice, Mode } from "./configuration";
+import { ICheckoutURL } from "./IInvoice";
+export { Invoice, Mode };
+export declare const createPayment: (invoice: Invoice) => Promise<string | ICheckoutURL>;
