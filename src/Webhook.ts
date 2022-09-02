@@ -1,32 +1,43 @@
-import {createHmac} from "crypto";
+import { createHmac } from "crypto";
 
-
-export interface ISignatureValidator{
-    isValid(APP_KEY: string, secretKey:string, responseData: object ) : boolean
+export interface ISignatureValidator {
+  isValid(APP_KEY: string, secretKey: string, responseData: object): boolean;
 }
-export class DefaultSignatureValidator implements ISignatureValidator{
-    static isValid(signature: string, secretKey?: string,  responseData?: any): boolean {
-        if (!signature){
-            return false
-        }
-
-        if (secretKey === undefined && process.env.CHARGILY_APP_SECRET === undefined){
-            throw new Error('The webhook signing secret is not set. Make sure that the `CHARGILY_APP_SECRET` config key is set to the correct value.')
-        }
-
-        const computedSignature = createHmac("sha256", secretKey ?? process.env.CHARGILY_APP_SECRET!).update(responseData).digest("hex")
-
-        if (computedSignature !== signature){
-            throw new Error('The signature is invalid.')
-        }
-        return true
+export class DefaultSignatureValidator implements ISignatureValidator {
+  static isValid(
+    signature: string,
+    secretKey?: string,
+    responseData?: any
+  ): boolean {
+    if (!signature) {
+      return false;
     }
 
-    isValid(APP_KEY: string, secretKey: string, responseData: object): boolean {
-        return false;
+    if (
+      secretKey === undefined &&
+      process.env.CHARGILY_APP_SECRET === undefined
+    ) {
+      throw new Error(
+        "The webhook signing secret is not set. Make sure that the `CHARGILY_APP_SECRET` config key is set to the correct value."
+      );
     }
+
+    const computedSignature = createHmac(
+      "sha256",
+      secretKey ?? process.env.CHARGILY_APP_SECRET!
+    )
+      .update(responseData)
+      .digest("hex");
+
+    if (computedSignature !== signature) {
+      throw new Error("The signature is invalid.");
+    }
+    return true;
+  }
+
+  isValid(APP_KEY: string, secretKey: string, responseData: object): boolean {
+    return false;
+  }
 }
 
-export class ProcessWebhook{
-
-}
+export class ProcessWebhook {}

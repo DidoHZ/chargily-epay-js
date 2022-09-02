@@ -2,7 +2,7 @@
   "name": "chargily-epay-js",
   "version": "1.1.0",
   "description": "Chargily ePay Gateway for Js",
-  "main": "src/chargily-epay-js.ts",
+  "main": "src/index.ts",
   "files": [
     "lib/**/*"
   ],
