@@ -1,4 +1,3 @@
-import axios from "axios";
 export enum Mode {
   CIB = "CIB",
   EDAHABIA = "EDAHABIA",
