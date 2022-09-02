@@ -10,12 +10,11 @@ export class DefaultSignatureValidator implements ISignatureValidator{
             return false
         }
 
-        secretKey = process.env.CHARGILY_APP_SECRET
-        if (secretKey === undefined){
+        if (secretKey === undefined && process.env.CHARGILY_APP_SECRET === undefined){
             throw new Error('The webhook signing secret is not set. Make sure that the `CHARGILY_APP_SECRET` config key is set to the correct value.')
         }
 
-        const computedSignature = createHmac("sha256", secretKey).update(responseData).digest("hex")
+        const computedSignature = createHmac("sha256", secretKey ?? process.env.CHARGILY_APP_SECRET!).update(responseData).digest("hex")
 
         if (computedSignature !== signature){
             throw new Error('The signature is invalid.')
