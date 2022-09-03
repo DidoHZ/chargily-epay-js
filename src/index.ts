@@ -1,5 +1,6 @@
 import { EPAY_CHARGILY_URL, Invoice } from "./configuration";
 import { IInvoice, ICheckoutURL } from "./IInvoice";
+import {PaymentException} from "./paymentException";
 import axios from "axios";
 
 export const createPayment = async (invoice: Invoice) => {
@@ -14,7 +15,6 @@ export const createPayment = async (invoice: Invoice) => {
   };
 
   try {
-    let res: any;
     const { data } = await axios
       .post<ICheckoutURL>(EPAY_CHARGILY_URL, inv, {
         headers: {
@@ -24,17 +24,17 @@ export const createPayment = async (invoice: Invoice) => {
         timeout: 1000,
       })
       .then((response) => {
-        return (res = response);
+        return response;
       });
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
       console.log("errors : ", error.response?.data);
-      return error;
+      throw PaymentException(error.message, error.response?.data, error.status)
     } else {
       console.log("unexpected error: ", error);
-      return "An unexpected error occurred";
+      throw error;
     }
   }
 };
