@@ -31,7 +31,7 @@ export const createPayment = async (invoice: Invoice) => {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
       console.log("errors : ", error.response?.data);
-      return error.message;
+      return error;
     } else {
       console.log("unexpected error: ", error);
       return "An unexpected error occurred";

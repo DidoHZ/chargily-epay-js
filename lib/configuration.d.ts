@@ -4,6 +4,7 @@ export declare enum Mode {
 }
 export declare const EPAY_CHARGILY_URL = "http://epay.chargily.com.dz/api/invoice";
 export declare class Invoice {
+    constructor(appKey: string, client: string, amount: number, discount: number | 0, invoiceNumber: number, backUrl: string, webhookUrl: string, mode: Mode);
     protected invoice: {};
     private _appKey;
     private _client;
