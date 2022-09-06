@@ -21,7 +21,7 @@ export const createPayment = async (invoice: Invoice) => {
           Accept: "application/json",
           "X-Authorization": invoice.appKey,
         },
-        timeout: 1000,
+        timeout: 5000,
       })
       .then((response) => {
         return response;
