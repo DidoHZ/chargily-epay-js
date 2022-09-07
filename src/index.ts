@@ -21,7 +21,7 @@ export const createPayment = async (invoice: Invoice) => {
           Accept: "application/json",
           "X-Authorization": invoice.appKey,
         },
-        timeout: 5000,
+        timeout: 2000,
       })
       .then((response) => {
         return response;
@@ -31,7 +31,7 @@ export const createPayment = async (invoice: Invoice) => {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
       console.log("errors : ", error.response?.data);
-      throw PaymentException(error.message, error.response?.data, error.status)
+      throw new PaymentException(error.message, error.response?.data, error.status)
     } else {
       console.log("unexpected error: ", error);
       throw error;

@@ -1,10 +1,5 @@
-interface PaymentException extends Error {
-    status: string;
+export declare class PaymentException extends Error {
+    constructor(message?: string, errors?: Array<string> | unknown, status?: string);
+    status?: string;
+    errors?: Array<string> | unknown;
 }
-interface PaymentExceptionConstractor {
-    new (message?: string, stack?: unknown, status?: string): PaymentException;
-    (message?: string, stack?: unknown, status?: string): PaymentException;
-    readonly prototype: PaymentException;
-}
-export declare var PaymentException: PaymentExceptionConstractor;
-export {};
